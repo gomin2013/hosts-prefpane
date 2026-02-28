@@ -1,195 +1,203 @@
 //
-}
-    var systemEntries: Int { entries.filter { $0.isSystemEntry }.count }
-    var disabledEntries: Int { entries.filter { !$0.isEnabled }.count }
-    var enabledEntries: Int { entries.filter { $0.isEnabled }.count }
-    var totalEntries: Int { entries.count }
-
-    // MARK: - Statistics
-
-    }
-        }
-            (entry.comment?.localizedCaseInsensitiveContains(searchText) ?? false)
-            entry.hostnames.contains { $0.localizedCaseInsensitiveContains(searchText) } ||
-            entry.ipAddress.localizedCaseInsensitiveContains(searchText) ||
-        return entries.filter { entry in
-
-        }
-            return entries
-        if searchText.isEmpty {
-    var filteredEntries: [HostEntry] {
-
-    // MARK: - Filtering
-
-    }
-        }
-            self.error = AlertError(error: error)
-        } catch {
-            try fileService.exportToFile(url: url)
-        do {
-    func exportToFile(url: URL) {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.importFromFile(url: url)
-            do {
-        Task {
-    func importFromFile(url: URL) {
-
-    }
-        showingExportDialog = true
-    func showExportDialog() {
-
-    }
-        showingImportDialog = true
-    func showImportDialog() {
-
-    // MARK: - Import & Export
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.restoreFromBackup()
-            do {
-        Task {
-    func restoreFromBackup() {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.createBackup()
-            do {
-        Task {
-    func createBackup() {
-
-    // MARK: - Backup & Restore
-
-    }
-        add(newEntry)
-
-        newEntry.comment = (newEntry.comment ?? "") + " (copy)"
-        newEntry.modifiedAt = Date()
-        newEntry.createdAt = Date()
-        newEntry.id = UUID()
-        var newEntry = entry
-    func duplicate(_ entry: HostEntry) {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.toggleEntry(entry)
-            do {
-        Task {
-    func toggleEnabled(_ entry: HostEntry) {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                selectedEntries.removeAll()
-                try await fileService.deleteEntries(ids: selectedEntries)
-            do {
-        Task {
-
-        guard !selectedEntries.isEmpty else { return }
-    func deleteSelected() {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                selectedEntries.remove(entry.id)
-                try await fileService.deleteEntry(entry)
-            do {
-        Task {
-    func delete(_ entry: HostEntry) {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.updateEntry(entry)
-            do {
-        Task {
-    func update(_ entry: HostEntry) {
-
-    }
-        }
-            }
-                self.error = AlertError(error: error)
-            } catch {
-                try await fileService.addEntry(entry)
-            do {
-        Task {
-    func add(_ entry: HostEntry) {
-
-    // MARK: - Entry Management
-
-    }
-        await fileService.reload()
-    func reload() async {
-
-    }
-        }
-            self.error = AlertError(error: error)
-        } catch {
-            try await fileService.load()
-        do {
-    func loadInitial() async {
-
-    // MARK: - Lifecycle
-
-    }
-            .assign(to: &$error)
-            .receive(on: DispatchQueue.main)
-            .map { AlertError(error: $0) }
-            .compactMap { $0 }
-        fileService.$lastError
-
-            .assign(to: &$isLoading)
-            .receive(on: DispatchQueue.main)
-        fileService.$isLoading
-
-            .assign(to: &$entries)
-            .receive(on: DispatchQueue.main)
-            .map { $0.entries }
-        fileService.$hostsFile
-        // Subscribe to file service updates
-    init() {
-
-    private var cancellables = Set<AnyCancellable>()
-    private let fileService = HostsFileService.shared
-
-    @Published var showingExportDialog = false
-    @Published var showingImportDialog = false
-    @Published var error: AlertError?
-    @Published var isLoading = false
-    @Published var searchText = ""
-    @Published var selectedEntries: Set<UUID> = []
-    @Published var entries: [HostEntry] = []
-class HostsViewModel: ObservableObject {
-@MainActor
-/// Main view model for the hosts list view
-
-import Combine
-import SwiftUI
-import Foundation
-
+//  HostsViewModel.swift
+//  Hosts Manager
 //
 //  Created on February 9, 2026.
 //
-//  Hosts Manager
-//  HostsViewModel.swift
 
+import Foundation
+import SwiftUI
+import Combine
+
+/// Main view model for the hosts list view
+@MainActor
+class HostsViewModel: ObservableObject {
+    @Published var entries: [HostEntry] = []
+    @Published var selectedEntries: Set<UUID> = []
+    @Published var searchText = ""
+    @Published var isLoading = false
+    @Published var error: AlertError?
+    @Published var showingImportDialog = false
+    @Published var showingExportDialog = false
+
+    private(set) var fileService = HostsFileService.shared
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        // Subscribe to file service updates
+        fileService.$hostsFile
+            .map { $0.entries }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$entries)
+
+        fileService.$isLoading
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isLoading)
+
+        fileService.$lastError
+            .compactMap { $0 }
+            .map { AlertError(error: $0) }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$error)
+    }
+
+    // MARK: - Lifecycle
+
+    func loadInitial() async {
+        do {
+            try await fileService.load()
+        } catch {
+            self.error = AlertError(error: error)
+        }
+    }
+
+    func reload() async {
+        await fileService.reload()
+    }
+
+    // MARK: - Entry Management
+
+    func add(_ entry: HostEntry) {
+        Task {
+            do {
+                try await fileService.addEntry(entry)
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func update(_ entry: HostEntry) {
+        Task {
+            do {
+                try await fileService.updateEntry(entry)
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func delete(_ entry: HostEntry) {
+        Task {
+            do {
+                selectedEntries.remove(entry.id)
+                try await fileService.deleteEntry(entry)
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func deleteSelected() {
+        guard !selectedEntries.isEmpty else { return }
+        Task {
+            do {
+                try await fileService.deleteEntries(ids: selectedEntries)
+                selectedEntries.removeAll()
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func toggleEnabled(_ entry: HostEntry) {
+        Task {
+            do {
+                try await fileService.toggleEntry(entry)
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func duplicate(_ entry: HostEntry) {
+        let newEntry = HostEntry(
+            ipAddress: entry.ipAddress,
+            hostnames: entry.hostnames,
+            isEnabled: entry.isEnabled,
+            comment: (entry.comment ?? "") + " (copy)"
+        )
+        add(newEntry)
+    }
+
+    // MARK: - Backup & Restore
+
+    func createBackup() {
+        Task {
+            do {
+                try await fileService.createBackup()
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func restoreFromBackup() {
+        Task {
+            do {
+                try await fileService.restoreFromBackup()
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    // MARK: - Import & Export
+
+    func showImportDialog() {
+        showingImportDialog = true
+    }
+
+    func showExportDialog() {
+        showingExportDialog = true
+    }
+
+    func importFromFile(url: URL) {
+        Task {
+            do {
+                try await fileService.importFromFile(url: url)
+            } catch {
+                self.error = AlertError(error: error)
+            }
+        }
+    }
+
+    func exportToFile(url: URL) {
+        do {
+            try fileService.exportToFile(url: url)
+        } catch {
+            self.error = AlertError(error: error)
+        }
+    }
+
+    // MARK: - Filtering
+
+    var filteredEntries: [HostEntry] {
+        if searchText.isEmpty {
+            return entries
+        }
+
+        return entries.filter { entry in
+            entry.ipAddress.localizedCaseInsensitiveContains(searchText) ||
+            entry.hostnames.contains { $0.localizedCaseInsensitiveContains(searchText) } ||
+            (entry.comment?.localizedCaseInsensitiveContains(searchText) ?? false)
+        }
+    }
+
+    // MARK: - Statistics
+
+    var totalEntries: Int { entries.count }
+    var enabledEntries: Int { entries.filter { $0.isEnabled }.count }
+    var disabledEntries: Int { entries.filter { !$0.isEnabled }.count }
+    var systemEntries: Int { entries.filter { $0.isSystemEntry }.count }
+
+    // MARK: - Connection
+
+    var isXPCConnected: Bool {
+        fileService.isXPCConnected
+    }
+
+    func retryConnection() async {
+        await fileService.retryConnection()
+    }
+}

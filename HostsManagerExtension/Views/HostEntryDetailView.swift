@@ -190,6 +190,12 @@ struct HostEntryDetailView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.large)
+            .accessibilityLabel(entry.isEnabled
+                ? "Disable \(entry.primaryHostname)"
+                : "Enable \(entry.primaryHostname)")
+            .accessibilityHint(entry.isEnabled
+                ? "Disables this entry by commenting it out"
+                : "Re-enables this entry in the hosts file")
 
             if !entry.isSystemEntry {
                 Button(role: .destructive) {
@@ -200,6 +206,8 @@ struct HostEntryDetailView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
+                .accessibilityLabel("Delete \(entry.primaryHostname)")
+                .accessibilityHint("Permanently removes this entry from the hosts file")
             }
         }
         .padding(.top, 12)
@@ -261,4 +269,3 @@ struct DetailRow: View {
         )
     }
 }
-

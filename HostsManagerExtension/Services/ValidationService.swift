@@ -17,8 +17,8 @@ class ValidationService {
     // MARK: - IP Address Validation
 
     /// Validate an IP address (IPv4 or IPv6)
-    static func validateIPAddress(_ ip: String) throws {
-        let trimmed = ip.trimmingCharacters(in: .whitespaces)
+    static func validateIPAddress(_ ipAddress: String) throws {
+        let trimmed = ipAddress.trimmingCharacters(in: .whitespaces)
 
         guard !trimmed.isEmpty else {
             throw ValidationError.emptyIPAddress
@@ -31,9 +31,9 @@ class ValidationService {
     }
 
     /// Check if string is a valid IP address (without throwing)
-    static func isValidIPAddress(_ ip: String) -> Bool {
+    static func isValidIPAddress(_ ipAddress: String) -> Bool {
         do {
-            try validateIPAddress(ip)
+            try validateIPAddress(ipAddress)
             return true
         } catch {
             return false
@@ -120,10 +120,8 @@ class ValidationService {
 
     /// Validate that hostnames are not reserved (for editing system entries)
     static func validateNotReserved(_ hostnames: [String]) throws {
-        for hostname in hostnames {
-            if HostsFileConstants.reservedHostnames.contains(hostname) {
-                throw ValidationError.reservedHostname(hostname)
-            }
+        for hostname in hostnames where HostsFileConstants.reservedHostnames.contains(hostname) {
+            throw ValidationError.reservedHostname(hostname)
         }
     }
 }
@@ -138,4 +136,3 @@ extension String {
         ValidationService.isValidHostname(self)
     }
 }
-

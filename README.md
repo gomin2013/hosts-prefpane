@@ -12,6 +12,7 @@ A modern macOS Settings extension for managing the `/etc/hosts` file, built enti
 - 🔍 **Search & Filter** — Quickly find entries with built-in search
 - 💬 **Comments Support** — Attach notes to individual host entries
 - 🔄 **Auto DNS Flush** — Flushes DNS cache automatically after changes
+- ♿ **Accessibility** — Full VoiceOver support on all interactive elements
 
 ## Requirements
 
@@ -47,18 +48,22 @@ Three-tier architecture with strict privilege separation:
 
 ```
 hosts-prefpane/
+├── .swiftlint.yml                # SwiftLint configuration
 ├── HostsManager.xcodeproj/       # Xcode project (3 targets + tests)
 ├── HostsManagerApp/              # Container app + SMAppService registration
 ├── HostsManagerExtension/        # Settings extension (UI + logic)
 │   ├── Models/                   # HostEntry, HostsFile, ValidationError
 │   ├── Services/                 # HostsFileService, ValidationService, XPCService
 │   ├── ViewModels/               # HostsViewModel, EditorViewModel
-│   └── Views/                    # SwiftUI views
+│   └── Views/                   # SwiftUI views + HostsFileDocument
 ├── HostsManagerHelper/           # Privileged XPC daemon
 ├── Shared/                       # Constants, Logger, protocols, extensions
 │   ├── Extensions/
 │   └── Utilities/
-└── Tests/                        # Unit tests (Validation, Parser)
+└── Tests/
+    ├── ValidationTests/          # IP address & hostname validation
+    ├── ParserTests/              # hosts file parsing & serialization
+    └── HostsManagerTests/        # Service, ViewModel & model unit tests
 ```
 
 ## Getting Started
@@ -75,7 +80,7 @@ Or via command line:
 
 ```bash
 xcodebuild -project HostsManager.xcodeproj \
-           -scheme HostsManagerApp \
+           -scheme HostsManager \
            -configuration Debug \
            build
 ```
@@ -84,10 +89,28 @@ xcodebuild -project HostsManager.xcodeproj \
 
 ```bash
 xcodebuild test -project HostsManager.xcodeproj \
-                -scheme HostsManagerApp
+                -scheme HostsManager \
+                -destination 'platform=macOS,arch=arm64' \
+                CODE_SIGNING_ALLOWED=NO
 ```
 
 Or in Xcode: **Product → Test** (⌘U).
+
+**69 tests across 5 test suites** — all passing:
+
+| Suite | Tests | Coverage |
+|-------|-------|----------|
+| `ValidationTests` | 10 | IP/hostname validation rules |
+| `ParserTests` | 10 | hosts file parsing & serialization |
+| `HostEntryTests` | 21 | Model properties, sorting, Codable |
+| `EditorViewModelTests` | 18 | Input validation, entry creation |
+| `HostsFileServiceTests` | 13 | CRUD operations, error propagation |
+
+### Lint
+
+```bash
+swiftlint lint   # 0 violations, 0 serious
+```
 
 ## Security
 
@@ -95,6 +118,7 @@ Elevated privileges are required to modify `/etc/hosts`. Mitigations include:
 
 - ✅ Privileged operations isolated in a separate helper binary
 - ✅ XPC communication with strict protocol validation (`HelperProtocol`)
+- ✅ `XPCServiceProtocol` enables full dependency injection for unit tests (no helper process needed)
 - ✅ Helper managed by `SMAppService` — no shell scripts or `AuthorizationExecuteWithPrivileges`
 - ✅ Automatic backup created before every write operation
 - ✅ Full input validation for IP addresses and hostnames
@@ -108,8 +132,8 @@ _Last updated: March 1, 2026_
 | 1–4 | Source code (models, services, views, helper) | ✅ Complete |
 | 5 | Configuration (Info.plist, entitlements, Package.swift) | ✅ Complete |
 | 6 | Xcode project setup & target configuration | ✅ Complete |
-| 7 | Testing (unit + integration) | 🔲 Pending |
-| 8 | Polish & UI refinement | 🔲 Pending |
+| 7 | Testing — 69 unit tests, CI green (`xcodebuild test`) | ✅ Complete |
+| 8 | Polish — SwiftLint 0 violations, accessibility, refactor | ✅ Complete |
 | 9 | Distribution (signing, notarization, installer) | 🔲 Pending |
 
 ## Roadmap
@@ -120,8 +144,8 @@ _Last updated: March 1, 2026_
 - [x] Phase 4: SwiftUI interface
 - [x] Phase 5: Configuration files
 - [x] Phase 6: Xcode project setup
-- [ ] Phase 7: Testing and compilation verification
-- [ ] Phase 8: Polish, accessibility, and performance
+- [x] Phase 7: Testing and compilation verification
+- [x] Phase 8: Polish, accessibility, SwiftLint, and code quality
 - [ ] Phase 9: Code signing, notarization, and distribution
 
 ## License

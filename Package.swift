@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // Swift Package Manager configuration for Hosts Manager
 // Note: This allows building/testing individual components
 // Full Xcode project is still recommended for the complete macOS app bundle
@@ -8,39 +8,56 @@ import PackageDescription
 let package = Package(
     name: "HostsManager",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v15)
     ],
     products: [
-        // Shared library used by all targets
         .library(
-            name: "Shared",
-            targets: ["Shared"]
-        ),
+            name: "HostsManagerExtension",
+            targets: ["HostsManagerExtension"]
+        )
     ],
     targets: [
-        // Shared code (models, protocols, utilities)
+        // Extension logic + Shared code compiled as one module for SPM builds
         .target(
-            name: "Shared",
+            name: "HostsManagerExtension",
             dependencies: [],
-            path: "Shared",
-            exclude: []
+            path: ".",
+            exclude: [
+                "HostsManagerExtension/Assets.xcassets",
+                "HostsManagerExtension/HostsManagerExtension.entitlements",
+                "HostsManagerExtension/Info.plist",
+                "HostsManagerExtension/HostsManagerExtension.swift",
+                "HostsManagerApp",
+                "HostsManagerHelper",
+                "Tests",
+                "HostsManager.xcodeproj",
+                "README.md",
+                "Package.swift"
+            ],
+            sources: [
+                "Shared",
+                "HostsManagerExtension"
+            ]
         ),
 
         // Tests for validation and parsing
         .testTarget(
             name: "ValidationTests",
-            dependencies: ["Shared"],
+            dependencies: ["HostsManagerExtension"],
             path: "Tests/ValidationTests"
         ),
 
         .testTarget(
             name: "ParserTests",
-            dependencies: ["Shared"],
+            dependencies: ["HostsManagerExtension"],
             path: "Tests/ParserTests"
         ),
+
+        .testTarget(
+            name: "HostsManagerTests",
+            dependencies: ["HostsManagerExtension"],
+            path: "Tests/HostsManagerTests"
+        )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v5]
 )
-
-
-

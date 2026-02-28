@@ -25,7 +25,7 @@ class HelperService: NSObject, HelperProtocol {
             AppLogger.helper.info("Successfully read \(data.count) bytes from hosts file")
             completion(data, nil)
         } catch {
-            AppLogger.helper.error("Failed to read hosts file", error: error)
+            AppLogger.helper.errorLog("Failed to read hosts file", error: error)
             completion(nil, HelperError.fileReadError)
         }
     }
@@ -53,7 +53,7 @@ class HelperService: NSObject, HelperProtocol {
             AppLogger.helper.info("Successfully wrote hosts file")
             completion(true, nil)
         } catch {
-            AppLogger.helper.error("Failed to write hosts file", error: error)
+            AppLogger.helper.errorLog("Failed to write hosts file", error: error)
             completion(false, HelperError.fileWriteError)
         }
     }
@@ -66,7 +66,7 @@ class HelperService: NSObject, HelperProtocol {
             AppLogger.helper.info("Successfully created backup")
             completion(true, nil)
         } catch {
-            AppLogger.helper.error("Failed to create backup", error: error)
+            AppLogger.helper.errorLog("Failed to create backup", error: error)
             completion(false, HelperError.backupFailed)
         }
     }
@@ -98,7 +98,7 @@ class HelperService: NSObject, HelperProtocol {
             AppLogger.helper.info("Successfully restored from backup")
             completion(true, nil)
         } catch {
-            AppLogger.helper.error("Failed to restore from backup", error: error)
+            AppLogger.helper.errorLog("Failed to restore from backup", error: error)
             completion(false, HelperError.restoreFailed)
         }
     }
@@ -147,7 +147,7 @@ class HelperService: NSObject, HelperProtocol {
                 AppLogger.helper.warning("DNS cache flush exited with status \(task.terminationStatus)")
             }
         } catch {
-            AppLogger.helper.error("Failed to flush DNS cache", error: error)
+            AppLogger.helper.errorLog("Failed to flush DNS cache", error: error)
         }
 
         // Also try discoveryutil for macOS 10.10+
@@ -171,8 +171,7 @@ class HelperService: NSObject, HelperProtocol {
             try killTask.run()
             killTask.waitUntilExit()
         } catch {
-            AppLogger.helper.error("Failed to HUP mDNSResponder", error: error)
+            AppLogger.helper.errorLog("Failed to HUP mDNSResponder", error: error)
         }
     }
 }
-

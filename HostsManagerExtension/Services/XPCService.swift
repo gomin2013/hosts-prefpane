@@ -7,9 +7,18 @@
 
 import Foundation
 
+/// Protocol enabling dependency injection / mocking of XPC calls in tests
+protocol XPCServiceProtocol {
+    func readHostsFile() async throws -> Data
+    func writeHostsFile(content: Data) async throws
+    func backupHostsFile() async throws
+    func restoreHostsFile() async throws
+    func checkConnection() async -> Bool
+}
+
 /// XPC client for communicating with the privileged helper tool
 @MainActor
-class XPCService: ObservableObject {
+class XPCService: ObservableObject, XPCServiceProtocol {
     static let shared = XPCService()
 
     @Published private(set) var isConnected = false
@@ -86,7 +95,7 @@ class XPCService: ObservableObject {
         }
 
         return connection.remoteObjectProxyWithErrorHandler { error in
-            AppLogger.xpc.error("XPC proxy error", error: error)
+            AppLogger.xpc.errorLog("XPC proxy error", error: error)
         } as? HelperProtocol
     }
 
@@ -101,7 +110,7 @@ class XPCService: ObservableObject {
         return try await withCheckedThrowingContinuation { continuation in
             helper.readHostsFile { data, error in
                 if let error = error {
-                    AppLogger.xpc.error("Failed to read hosts file", error: error)
+                    AppLogger.xpc.errorLog("Failed to read hosts file", error: error)
                     continuation.resume(throwing: error)
                 } else if let data = data {
                     AppLogger.xpc.info("Successfully read hosts file (\(data.count) bytes)")
@@ -122,7 +131,7 @@ class XPCService: ObservableObject {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             helper.writeHostsFile(content: content) { success, error in
                 if let error = error {
-                    AppLogger.xpc.error("Failed to write hosts file", error: error)
+                    AppLogger.xpc.errorLog("Failed to write hosts file", error: error)
                     continuation.resume(throwing: error)
                 } else if success {
                     AppLogger.xpc.info("Successfully wrote hosts file (\(content.count) bytes)")
@@ -143,7 +152,7 @@ class XPCService: ObservableObject {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             helper.backupHostsFile { success, error in
                 if let error = error {
-                    AppLogger.xpc.error("Failed to backup hosts file", error: error)
+                    AppLogger.xpc.errorLog("Failed to backup hosts file", error: error)
                     continuation.resume(throwing: error)
                 } else if success {
                     AppLogger.xpc.info("Successfully backed up hosts file")
@@ -164,7 +173,7 @@ class XPCService: ObservableObject {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             helper.restoreHostsFile { success, error in
                 if let error = error {
-                    AppLogger.xpc.error("Failed to restore hosts file", error: error)
+                    AppLogger.xpc.errorLog("Failed to restore hosts file", error: error)
                     continuation.resume(throwing: error)
                 } else if success {
                     AppLogger.xpc.info("Successfully restored hosts file")
@@ -189,4 +198,3 @@ class XPCService: ObservableObject {
         }
     }
 }
-

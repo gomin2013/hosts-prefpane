@@ -1,49 +1,48 @@
 //
-HelperToolMain.main()
-// Run the helper
+//  main.swift
+//  HostsManagerHelper
+//
+//  Created on February 9, 2026.
+//
 
-}
-    }
-        return true
-        AppLogger.helper.info("XPC connection accepted and resumed")
+import Foundation
 
-        newConnection.resume()
-
-        }
-            AppLogger.helper.warning("XPC connection interrupted")
-        newConnection.interruptionHandler = {
-
-        }
-            AppLogger.helper.info("XPC connection invalidated")
-        newConnection.invalidationHandler = {
-
-        newConnection.exportedObject = HelperService()
-        newConnection.exportedInterface = NSXPCInterface(with: HelperProtocol.self)
-
-        AppLogger.helper.info("Received new XPC connection request")
-    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-class HelperToolDelegate: NSObject, NSXPCListenerDelegate {
-/// Delegate for handling XPC connections
-
-}
-    }
-        RunLoop.current.run()
-        listener.resume()
+/// Entry point for the privileged helper tool
+class HelperToolMain {
+    static func main() {
+        let delegate = HelperToolDelegate()
+        let listener = NSXPCListener(machServiceName: AppConstants.helperMachServiceName)
 
         AppLogger.helper.info("Privileged helper tool started")
 
         listener.delegate = delegate
-        let listener = NSXPCListener(machServiceName: AppConstants.helperMachServiceName)
-        let delegate = HelperToolDelegate()
-    static func main() {
-class HelperToolMain {
-/// Entry point for the privileged helper tool
+        listener.resume()
 
-import Foundation
+        RunLoop.current.run()
+    }
+}
 
-//
-//  Created on February 9, 2026.
-//
-//  HostsManagerHelper
-//  main.swift
+/// Delegate for handling XPC connections
+class HelperToolDelegate: NSObject, NSXPCListenerDelegate {
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+        AppLogger.helper.info("Received new XPC connection request")
 
+        newConnection.exportedInterface = NSXPCInterface(with: HelperProtocol.self)
+        newConnection.exportedObject = HelperService()
+
+        newConnection.invalidationHandler = {
+            AppLogger.helper.info("XPC connection invalidated")
+        }
+
+        newConnection.interruptionHandler = {
+            AppLogger.helper.warning("XPC connection interrupted")
+        }
+
+        newConnection.resume()
+        AppLogger.helper.info("XPC connection accepted and resumed")
+        return true
+    }
+}
+
+// Run the helper
+HelperToolMain.main()

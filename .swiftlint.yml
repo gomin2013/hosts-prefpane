@@ -1,0 +1,22 @@
+excluded:
+  - .build
+  - HostsManager.xcodeproj
+
+opt_in_rules:
+  - for_where
+
+rules:
+  identifier_name:
+    min_length: 3
+    max_length: 40
+    excluded:
+      - id
+
+type_body_length:
+  warning: 400
+  error: 500
+
+file_length:
+  warning: 400
+  error: 600
+

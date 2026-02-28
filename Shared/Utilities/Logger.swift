@@ -16,7 +16,7 @@ enum AppLogger {
     static let fileIO = Logger(subsystem: subsystem, category: "file-io")
     static let xpc = Logger(subsystem: subsystem, category: "xpc")
     static let validation = Logger(subsystem: subsystem, category: "validation")
-    static let ui = Logger(subsystem: subsystem, category: "ui")
+    static let userInterface = Logger(subsystem: subsystem, category: "ui")
     static let helper = Logger(subsystem: subsystem, category: "helper")
 }
 
@@ -46,4 +46,3 @@ extension Logger {
         }
     }
 }
-

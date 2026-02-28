@@ -1,0 +1,204 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'hotfix**'
+
+  pull_request:
+    branches-ignore:
+      - main
+
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+env:
+  XCODE_VERSION: '16.2'
+  SCHEME: 'HostsManager'
+  PROJECT: 'HostsManager.xcodeproj'
+  DESTINATION: 'platform=macOS'
+
+jobs:
+  # ─────────────────────────────────────────────
+  # Job 1: Build via Xcode
+  # ─────────────────────────────────────────────
+  build:
+    name: Build (Xcode)
+    runs-on: macos-15
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+
+      - name: Show build environment
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Resolve Swift Package dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project ${{ env.PROJECT }} \
+            -scheme ${{ env.SCHEME }}
+
+      - name: Build (Release)
+        run: |
+          xcodebuild build \
+            -project ${{ env.PROJECT }} \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -configuration Release \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty && exit ${PIPESTATUS[0]}
+
+  # ─────────────────────────────────────────────
+  # Job 2: Unit Tests via SPM (fast, no signing)
+  # ─────────────────────────────────────────────
+  test-spm:
+    name: Tests (Swift Package Manager)
+    runs-on: macos-15
+    needs: build
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+
+      - name: Run all SPM test targets
+        run: |
+          swift test \
+            --parallel \
+            --enable-code-coverage \
+            2>&1 | tee test-output.txt
+        continue-on-error: false
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spm-test-results
+          path: test-output.txt
+          retention-days: 7
+
+      - name: Generate code coverage report
+        run: |
+          xcrun llvm-cov export \
+            .build/debug/HostsManagerPackageTests.xctest/Contents/MacOS/HostsManagerPackageTests \
+            -instr-profile .build/debug/codecov/default.profdata \
+            -format lcov > coverage.lcov 2>/dev/null || true
+
+      - name: Upload coverage to Codecov
+        if: success()
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.lcov
+          flags: unittests
+          fail_ci_if_error: false
+
+  # ─────────────────────────────────────────────
+  # Job 3: Unit Tests via Xcode (full test suite)
+  # ─────────────────────────────────────────────
+  test-xcode:
+    name: Tests (Xcode)
+    runs-on: macos-15
+    needs: build
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -project ${{ env.PROJECT }} \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -enableCodeCoverage YES \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty --report junit --output test-results.xml && exit ${PIPESTATUS[0]}
+
+      - name: Upload JUnit test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcode-test-results
+          path: test-results.xml
+          retention-days: 7
+
+  # ─────────────────────────────────────────────
+  # Job 4: Swift lint / format check
+  # ─────────────────────────────────────────────
+  lint:
+    name: Lint (SwiftLint)
+    runs-on: macos-15
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: |
+          swiftlint lint \
+            --reporter github-actions-logging \
+            --strict
+
+  # ─────────────────────────────────────────────
+  # Job 5: Archive & export (only on main branch)
+  # ─────────────────────────────────────────────
+  archive:
+    name: Archive
+    runs-on: macos-15
+    needs: [ test-spm, test-xcode ]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+
+      - name: Archive
+        run: |
+          xcodebuild archive \
+            -project ${{ env.PROJECT }} \
+            -scheme ${{ env.SCHEME }} \
+            -destination "${{ env.DESTINATION }}" \
+            -archivePath ./build/HostsManager.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Upload archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HostsManager-archive
+          path: build/HostsManager.xcarchive
+          retention-days: 14

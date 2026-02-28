@@ -18,9 +18,17 @@ class HostsFileService: ObservableObject {
     @Published private(set) var lastError: Error?
     @Published private(set) var lastModified: Date?
 
-    private let xpcService = XPCService.shared
+    private let xpcService: XPCServiceProtocol
 
-    private init() {}
+    /// Default singleton initialiser — uses the real XPC service
+    init() {
+        self.xpcService = XPCService.shared
+    }
+
+    /// Testable initialiser — accepts any XPCServiceProtocol implementation
+    init(xpcOverride: XPCServiceProtocol) {
+        self.xpcService = xpcOverride
+    }
 
     // MARK: - Read Operations
 
@@ -46,7 +54,7 @@ class HostsFileService: ObservableObject {
 
         } catch {
             self.lastError = error
-            AppLogger.fileIO.error("Failed to load hosts file", error: error)
+            AppLogger.fileIO.errorLog("Failed to load hosts file", error: error)
             throw error
         }
     }
@@ -83,11 +91,11 @@ class HostsFileService: ObservableObject {
             self.lastModified = Date()
             self.lastError = nil
 
-            AppLogger.fileIO.info("Saved hosts file with \(hostsFile.entries.count) entries")
+            AppLogger.fileIO.info("Saved hosts file with \(self.hostsFile.entries.count) entries")
 
         } catch {
             self.lastError = error
-            AppLogger.fileIO.error("Failed to save hosts file", error: error)
+            AppLogger.fileIO.errorLog("Failed to save hosts file", error: error)
             throw error
         }
     }
@@ -145,6 +153,23 @@ class HostsFileService: ObservableObject {
         try await save()
     }
 
+    // MARK: - Connection Status
+
+    /// Whether the XPC helper is currently connected
+    var isXPCConnected: Bool {
+        (xpcService as? XPCService)?.isConnected ?? true
+    }
+
+    /// Re-check helper connection and reload if successful
+    func retryConnection() async {
+        if let realXPC = xpcService as? XPCService {
+            let connected = await realXPC.checkConnection()
+            if connected {
+                await reload()
+            }
+        }
+    }
+
     // MARK: - Backup & Restore
 
     /// Create a backup of the current hosts file
@@ -189,4 +214,3 @@ class HostsFileService: ObservableObject {
         AppLogger.fileIO.info("Imported hosts file from \(url.path) with \(parsed.entries.count) entries")
     }
 }
-

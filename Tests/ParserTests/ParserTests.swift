@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import HostsManagerExtension
 
 final class ParserTests: XCTestCase {
 
@@ -170,4 +169,3 @@ final class ParserTests: XCTestCase {
         XCTAssertFalse(hostsFile.contains(hostname: "dev.example.com", excluding: entry.id))
     }
 }
-

@@ -33,9 +33,20 @@ struct HostsFile {
                 continue
             }
 
-            // Handle comment-only lines
+            // Handle comment-only lines — but first check if it's a disabled entry
             if trimmedLine.hasPrefix("#") {
-                if isInHeader {
+                // Check if the comment looks like a disabled host entry: "# IP hostname..."
+                let afterHash = trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces)
+                let parts = afterHash.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }
+                let looksLikeEntry = parts.count >= 2 && isIPAddress(parts[0])
+
+                if looksLikeEntry {
+                    // It's a disabled entry — not a pure comment
+                    isInHeader = false
+                    if let entry = parseEntry(from: line) {
+                        entries.append(entry)
+                    }
+                } else if isInHeader {
                     headerComments.append(trimmedLine)
                 }
                 continue
@@ -58,6 +69,16 @@ struct HostsFile {
         }
 
         return HostsFile(entries: entries, headerComments: headerComments)
+    }
+
+    /// Quick check whether a string looks like an IP address (IPv4 or IPv6)
+    private static func isIPAddress(_ string: String) -> Bool {
+        // IPv4: digits and dots
+        let ipv4Pattern = #"^\d{1,3}(\.\d{1,3}){3}$"#
+        if string.range(of: ipv4Pattern, options: .regularExpression) != nil { return true }
+        // IPv6: contains colons
+        if string.contains(":") { return true }
+        return false
     }
 
     /// Parse a single entry line
@@ -167,4 +188,3 @@ extension HostsFile {
         )
     }
 }
-

@@ -74,19 +74,32 @@ struct HostsListView: View {
 
     private var sidebarContent: some View {
         VStack(spacing: 0) {
-            // Statistics bar
+            if !viewModel.isXPCConnected {
+                ConnectionWarningBanner {
+                    Task { await viewModel.retryConnection() }
+                }
+            }
+
             statsBar
                 .padding()
                 .background(Color(nsColor: .controlBackgroundColor))
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    "Stats: \(viewModel.totalEntries) total, \(viewModel.enabledEntries) enabled, " +
+                    "\(viewModel.disabledEntries) disabled, \(viewModel.systemEntries) system"
+                )
 
             Divider()
 
-            // List
             if viewModel.isLoading {
-                ProgressView()
+                ProgressView("Loading hosts file…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityLabel("Loading")
             } else if viewModel.filteredEntries.isEmpty {
-                emptyStateView
+                HostsEmptyStateView(
+                    isSearching: !viewModel.searchText.isEmpty,
+                    onAddEntry: { showingAddEntry = true }
+                )
             } else {
                 List(selection: $selectedEntry) {
                     ForEach(viewModel.filteredEntries) { entry in
@@ -95,6 +108,12 @@ struct HostsListView: View {
                             .contextMenu {
                                 entryContextMenu(for: entry)
                             }
+                    }
+                    .onDeleteCommand {
+                        if let entry = selectedEntry {
+                            viewModel.delete(entry)
+                            selectedEntry = nil
+                        }
                     }
                 }
                 .listStyle(.sidebar)
@@ -109,14 +128,24 @@ struct HostsListView: View {
                 } label: {
                     Label("Add Entry", systemImage: "plus")
                 }
+                .keyboardShortcut("n", modifiers: .command)
+                .accessibilityLabel("Add new host entry")
+                .accessibilityHint("Opens the editor to create a new host entry")
             }
 
             ToolbarItem(placement: .automatic) {
                 Menu {
-                    menuContent
+                    HostsMenuContent(
+                        onImport: { showingImportPicker = true },
+                        onExport: { showingExportPicker = true },
+                        onBackup: { viewModel.createBackup() },
+                        onRestore: { showingRestoreConfirmation = true },
+                        onRefresh: { Task { await viewModel.reload() } }
+                    )
                 } label: {
                     Label("More", systemImage: "ellipsis.circle")
                 }
+                .accessibilityLabel("More actions")
             }
         }
     }
@@ -152,90 +181,30 @@ struct HostsListView: View {
         .font(.caption)
     }
 
-    private var emptyStateView: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "doc.text.magnifyingglass")
-                .font(.system(size: 48))
-                .foregroundColor(.secondary)
-
-            Text(viewModel.searchText.isEmpty ? "No Entries" : "No Results")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text(viewModel.searchText.isEmpty
-                 ? "Add your first host entry to get started"
-                 : "Try a different search term")
-                .foregroundColor(.secondary)
-
-            if viewModel.searchText.isEmpty {
-                Button("Add Entry") {
-                    showingAddEntry = true
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var menuContent: some View {
-        Group {
-            Button {
-                showingImportPicker = true
-            } label: {
-                Label("Import...", systemImage: "square.and.arrow.down")
-            }
-
-            Button {
-                showingExportPicker = true
-            } label: {
-                Label("Export...", systemImage: "square.and.arrow.up")
-            }
-
-            Divider()
-
-            Button {
-                viewModel.createBackup()
-            } label: {
-                Label("Create Backup", systemImage: "clock.arrow.circlepath")
-            }
-
-            Button {
-                showingRestoreConfirmation = true
-            } label: {
-                Label("Restore from Backup", systemImage: "arrow.counterclockwise")
-            }
-
-            Divider()
-
-            Button {
-                Task { await viewModel.reload() }
-            } label: {
-                Label("Refresh", systemImage: "arrow.clockwise")
-            }
-            .keyboardShortcut("r", modifiers: .command)
-        }
-    }
-
     @ViewBuilder
     private func entryContextMenu(for entry: HostEntry) -> some View {
         Button("Edit") {
             selectedEntry = entry
         }
+        .accessibilityLabel("Edit \(entry.primaryHostname)")
 
         Button("Duplicate") {
             viewModel.duplicate(entry)
         }
+        .accessibilityLabel("Duplicate \(entry.primaryHostname)")
 
         Divider()
 
         Button(entry.isEnabled ? "Disable" : "Enable") {
             viewModel.toggleEnabled(entry)
         }
+        .accessibilityLabel(entry.isEnabled ? "Disable \(entry.primaryHostname)" : "Enable \(entry.primaryHostname)")
 
         if !entry.isSystemEntry {
             Button("Delete", role: .destructive) {
                 viewModel.delete(entry)
             }
+            .accessibilityLabel("Delete \(entry.primaryHostname)")
         }
     }
 
@@ -258,6 +227,111 @@ struct HostsListView: View {
         case .failure(let error):
             viewModel.error = AlertError(error: error)
         }
+    }
+}
+
+// MARK: - Connection Warning Banner
+
+private struct ConnectionWarningBanner: View {
+    let onRetry: () -> Void
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Helper not connected")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+
+                Text("The privileged helper tool is not running. Read-only mode.")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            Button("Retry", action: onRetry)
+                .font(.caption)
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.orange.opacity(0.15))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Warning: Helper tool not connected. Retry connection.")
+    }
+}
+
+// MARK: - Hosts Menu Content
+
+private struct HostsMenuContent: View {
+    let onImport: () -> Void
+    let onExport: () -> Void
+    let onBackup: () -> Void
+    let onRestore: () -> Void
+    let onRefresh: () -> Void
+
+    var body: some View {
+        Button(action: onImport) {
+            Label("Import...", systemImage: "square.and.arrow.down")
+        }
+
+        Button(action: onExport) {
+            Label("Export...", systemImage: "square.and.arrow.up")
+        }
+
+        Divider()
+
+        Button(action: onBackup) {
+            Label("Create Backup", systemImage: "clock.arrow.circlepath")
+        }
+
+        Button(action: onRestore) {
+            Label("Restore from Backup", systemImage: "arrow.counterclockwise")
+        }
+
+        Divider()
+
+        Button(action: onRefresh) {
+            Label("Refresh", systemImage: "arrow.clockwise")
+        }
+        .keyboardShortcut("r", modifiers: .command)
+    }
+}
+
+// MARK: - Empty State View
+
+private struct HostsEmptyStateView: View {
+    let isSearching: Bool
+    let onAddEntry: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "doc.text.magnifyingglass")
+                .font(.system(size: 48))
+                .foregroundColor(.secondary)
+                .accessibilityHidden(true)
+
+            Text(isSearching ? "No Results" : "No Entries")
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text(isSearching
+                 ? "Try a different search term"
+                 : "Add your first host entry to get started")
+                .foregroundColor(.secondary)
+
+            if !isSearching {
+                Button("Add Entry", action: onAddEntry)
+                    .buttonStyle(.borderedProminent)
+                    .keyboardShortcut("n", modifiers: .command)
+                    .accessibilityHint("Opens the editor to create a new host entry")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
@@ -286,6 +360,7 @@ struct EmptyDetailView: View {
             Image(systemName: "network")
                 .font(.system(size: 64))
                 .foregroundColor(.secondary)
+                .accessibilityHidden(true)
 
             Text("Select an Entry")
                 .font(.title2)
@@ -297,31 +372,8 @@ struct EmptyDetailView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(nsColor: .textBackgroundColor))
-    }
-}
-
-// MARK: - Document Type
-struct HostsFileDocument: FileDocument {
-    static var readableContentTypes: [UTType] { [.plainText] }
-
-    var content: String
-
-    init(content: String) {
-        self.content = content
-    }
-
-    init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
-        else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-        content = string
-    }
-
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = content.data(using: .utf8)!
-        return .init(regularFileWithContents: data)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("No entry selected. Choose a host entry from the list to view details.")
     }
 }
 
@@ -329,4 +381,3 @@ struct HostsFileDocument: FileDocument {
 #Preview {
     HostsListView()
 }
-

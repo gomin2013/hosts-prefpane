@@ -8,7 +8,7 @@
 import Foundation
 
 /// Errors that can occur during validation of host entries
-enum ValidationError: LocalizedError, Equatable {
+enum ValidationError: LocalizedError, Equatable, Hashable {
     case invalidIPAddress(String)
     case invalidHostname(String)
     case emptyIPAddress
@@ -19,8 +19,8 @@ enum ValidationError: LocalizedError, Equatable {
 
     var errorDescription: String? {
         switch self {
-        case .invalidIPAddress(let ip):
-            return "Invalid IP address: '\(ip)'"
+        case .invalidIPAddress(let ipAddress):
+            return "Invalid IP address: '\(ipAddress)'"
         case .invalidHostname(let hostname):
             return "Invalid hostname: '\(hostname)'"
         case .emptyIPAddress:
@@ -55,4 +55,3 @@ enum ValidationError: LocalizedError, Equatable {
         }
     }
 }
-

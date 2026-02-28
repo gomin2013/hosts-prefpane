@@ -66,4 +66,3 @@ enum HelperError: Error, LocalizedError {
         }
     }
 }
-

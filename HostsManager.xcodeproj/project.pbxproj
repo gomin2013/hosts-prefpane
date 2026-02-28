@@ -1,0 +1,936 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		/* HostsManagerApp sources */
+		AA000001 /* HostsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000001 /* HostsManagerApp.swift */; };
+		/* HostsManagerExtension sources */
+		AA000002 /* HostsManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000002 /* HostsManagerExtension.swift */; };
+		AA000003 /* HostEntry.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000003 /* HostEntry.swift */; };
+		AA000004 /* HostsFile.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000004 /* HostsFile.swift */; };
+		AA000005 /* ValidationError.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000005 /* ValidationError.swift */; };
+		AA000006 /* HostsFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000006 /* HostsFileService.swift */; };
+		AA000007 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000007 /* ValidationService.swift */; };
+		AA000008 /* XPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000008 /* XPCService.swift */; };
+		AA000009 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000009 /* EditorViewModel.swift */; };
+		AA000010 /* HostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000010 /* HostsViewModel.swift */; };
+		AA000011 /* HostEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000011 /* HostEntryDetailView.swift */; };
+		AA000012 /* HostEntryEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000012 /* HostEntryEditorView.swift */; };
+		AA000013 /* HostEntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000013 /* HostEntryRow.swift */; };
+		AA000014 /* HostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000014 /* HostsListView.swift */; };
+		/* HostsManagerHelper sources */
+		AA000015 /* HelperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000015 /* HelperService.swift */; };
+		AA000016 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000016 /* main.swift */; };
+		/* Shared sources - App target */
+		AA000017 /* Constants.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000017 /* Constants.swift */; };
+		AA000018 /* HelperProtocol.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000018 /* HelperProtocol.swift */; };
+		AA000019 /* String+Validation.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000019 /* String+Validation.swift */; };
+		AA000020 /* View+Extensions.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000020 /* View+Extensions.swift */; };
+		AA000021 /* ErrorHandling.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000021 /* ErrorHandling.swift */; };
+		AA000022 /* Logger.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000022 /* Logger.swift */; };
+		/* Shared sources - Extension target */
+		AA000023 /* Constants.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000017 /* Constants.swift */; };
+		AA000024 /* HelperProtocol.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000018 /* HelperProtocol.swift */; };
+		AA000025 /* String+Validation.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000019 /* String+Validation.swift */; };
+		AA000026 /* View+Extensions.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000020 /* View+Extensions.swift */; };
+		AA000027 /* ErrorHandling.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000021 /* ErrorHandling.swift */; };
+		AA000028 /* Logger.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000022 /* Logger.swift */; };
+		/* Shared sources - Helper target */
+		AA000029 /* Constants.swift in Sources (Helper) */ = {isa = PBXBuildFile; fileRef = FA000017 /* Constants.swift */; };
+		AA000030 /* HelperProtocol.swift in Sources (Helper) */ = {isa = PBXBuildFile; fileRef = FA000018 /* HelperProtocol.swift */; };
+		AA000031 /* ErrorHandling.swift in Sources (Helper) */ = {isa = PBXBuildFile; fileRef = FA000021 /* ErrorHandling.swift */; };
+		AA000032 /* Logger.swift in Sources (Helper) */ = {isa = PBXBuildFile; fileRef = FA000022 /* Logger.swift */; };
+		/* Tests sources */
+		AA000033 /* ValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000023 /* ValidationTests.swift */; };
+		AA000034 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000024 /* ParserTests.swift */; };
+		/* Shared sources - Tests target */
+		AA000035 /* Constants.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000017 /* Constants.swift */; };
+		AA000036 /* HelperProtocol.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000018 /* HelperProtocol.swift */; };
+		AA000037 /* String+Validation.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000019 /* String+Validation.swift */; };
+		AA000038 /* View+Extensions.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000020 /* View+Extensions.swift */; };
+		AA000039 /* ErrorHandling.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000021 /* ErrorHandling.swift */; };
+		AA000040 /* Logger.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000022 /* Logger.swift */; };
+		AA000041 /* HostEntry.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000003 /* HostEntry.swift */; };
+		AA000042 /* HostsFile.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000004 /* HostsFile.swift */; };
+		AA000043 /* ValidationError.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000005 /* ValidationError.swift */; };
+		AA000044 /* HostsFileService.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000006 /* HostsFileService.swift */; };
+		AA000045 /* ValidationService.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000007 /* ValidationService.swift */; };
+		AA000046 /* XPCService.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000008 /* XPCService.swift */; };
+		AA000047 /* EditorViewModel.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000009 /* EditorViewModel.swift */; };
+		AA000048 /* HostsViewModel.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000010 /* HostsViewModel.swift */; };
+		/* HostsManagerTests new source files */
+		AA000051 /* EditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000051 /* EditorViewModelTests.swift */; };
+		AA000052 /* HostEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000052 /* HostEntryTests.swift */; };
+		AA000053 /* HostsFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000053 /* HostsFileServiceTests.swift */; };
+		AA000054 /* MockXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000054 /* MockXPCService.swift */; };
+		/* HostsManagerExtension.appex linked into Tests */
+		AA000055 /* HostsManagerExtension.appex in Frameworks (Tests) */ = {isa = PBXBuildFile; fileRef = BB000002 /* HostsManagerExtension.appex */; };
+		/* HostsFileDocument */
+		AA000056 /* HostsFileDocument.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000056 /* HostsFileDocument.swift */; };
+		AA000057 /* HostsFileDocument.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000056 /* HostsFileDocument.swift */; };
+		/* Extension embedded in App */
+		AA000049 /* HostsManagerExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB000002 /* HostsManagerExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		/* Assets */
+		AA000050 /* Assets.xcassets in Resources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000025 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000002T;
+			remoteInfo = HostsManagerExtension;
+		};
+		CC000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000003T;
+			remoteInfo = HostsManagerHelper;
+		};
+		CC000003 /* PBXContainerItemProxy (Tests→Ext) */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000002T;
+			remoteInfo = HostsManagerExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DD000001 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AA000049 /* HostsManagerExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FA000001 /* HostsManagerApp.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManagerApp.swift; sourceTree = "<group>"; };
+		FA000002 /* HostsManagerExtension.swift */     = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsManagerExtension.swift; sourceTree = "<group>"; };
+		FA000003 /* HostEntry.swift */                 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostEntry.swift; sourceTree = "<group>"; };
+		FA000004 /* HostsFile.swift */                 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFile.swift; sourceTree = "<group>"; };
+		FA000005 /* ValidationError.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
+		FA000006 /* HostsFileService.swift */          = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFileService.swift; sourceTree = "<group>"; };
+		FA000007 /* ValidationService.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
+		FA000008 /* XPCService.swift */                = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCService.swift; sourceTree = "<group>"; };
+		FA000009 /* EditorViewModel.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
+		FA000010 /* HostsViewModel.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsViewModel.swift; sourceTree = "<group>"; };
+		FA000011 /* HostEntryDetailView.swift */       = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostEntryDetailView.swift; sourceTree = "<group>"; };
+		FA000012 /* HostEntryEditorView.swift */       = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostEntryEditorView.swift; sourceTree = "<group>"; };
+		FA000013 /* HostEntryRow.swift */              = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostEntryRow.swift; sourceTree = "<group>"; };
+		FA000014 /* HostsListView.swift */             = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsListView.swift; sourceTree = "<group>"; };
+		FA000015 /* HelperService.swift */             = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperService.swift; sourceTree = "<group>"; };
+		FA000016 /* main.swift */                      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		FA000017 /* Constants.swift */                 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FA000018 /* HelperProtocol.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperProtocol.swift; sourceTree = "<group>"; };
+		FA000019 /* String+Validation.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
+		FA000020 /* View+Extensions.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		FA000021 /* ErrorHandling.swift */             = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		FA000022 /* Logger.swift */                    = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		FA000023 /* ValidationTests.swift */           = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationTests.swift; sourceTree = "<group>"; };
+		FA000024 /* ParserTests.swift */               = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		FA000025 /* Assets.xcassets */                 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA000051 /* EditorViewModelTests.swift */      = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModelTests.swift; sourceTree = "<group>"; };
+		FA000052 /* HostEntryTests.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostEntryTests.swift; sourceTree = "<group>"; };
+		FA000053 /* HostsFileServiceTests.swift */     = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFileServiceTests.swift; sourceTree = "<group>"; };
+		FA000054 /* MockXPCService.swift */            = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockXPCService.swift; sourceTree = "<group>"; };
+		FA000056 /* HostsFileDocument.swift */         = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFileDocument.swift; sourceTree = "<group>"; };
+		FA000026 /* HostsManagerApp.entitlements */    = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HostsManagerApp.entitlements; sourceTree = "<group>"; };
+		FA000027 /* HostsManagerExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HostsManagerExtension.entitlements; sourceTree = "<group>"; };
+		FA000028 /* App-Info.plist */                  = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA000029 /* Ext-Info.plist */                  = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA000030 /* Helper-Info.plist */               = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA000031 /* Launchd.plist */                   = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Launchd.plist; sourceTree = "<group>"; };
+		BB000001 /* HostsManager.app */                = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HostsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000002 /* HostsManagerExtension.appex */     = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; includeInIndex = 0; path = HostsManagerExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000003 /* HostsManagerHelper */              = {isa = PBXFileReference; explicitFileType = compiled.mach-o.executable; includeInIndex = 0; path = HostsManagerHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000004 /* HostsManagerTests.xctest */        = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HostsManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EE000001 /* Frameworks (App) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE000002 /* Frameworks (Ext) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE000003 /* Frameworks (Helper) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE000004 /* Frameworks (Tests) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		GG000000 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				GG000001 /* HostsManagerApp */,
+				GG000002 /* HostsManagerExtension */,
+				GG000003 /* HostsManagerHelper */,
+				GG000004 /* Shared */,
+				GG000005 /* Tests */,
+				GG000006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		GG000001 /* HostsManagerApp */ = {
+			isa = PBXGroup;
+			children = (
+				FA000001 /* HostsManagerApp.swift */,
+				FA000026 /* HostsManagerApp.entitlements */,
+				FA000028 /* Info.plist */,
+			);
+			path = HostsManagerApp;
+			sourceTree = "<group>";
+		};
+		GG000002 /* HostsManagerExtension */ = {
+			isa = PBXGroup;
+			children = (
+				FA000002 /* HostsManagerExtension.swift */,
+				FA000027 /* HostsManagerExtension.entitlements */,
+				FA000029 /* Info.plist */,
+				FA000025 /* Assets.xcassets */,
+				GG000010 /* Models */,
+				GG000011 /* Services */,
+				GG000012 /* ViewModels */,
+				GG000013 /* Views */,
+			);
+			path = HostsManagerExtension;
+			sourceTree = "<group>";
+		};
+		GG000003 /* HostsManagerHelper */ = {
+			isa = PBXGroup;
+			children = (
+				FA000015 /* HelperService.swift */,
+				FA000016 /* main.swift */,
+				FA000030 /* Info.plist */,
+				FA000031 /* Launchd.plist */,
+			);
+			path = HostsManagerHelper;
+			sourceTree = "<group>";
+		};
+		GG000004 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				FA000017 /* Constants.swift */,
+				FA000018 /* HelperProtocol.swift */,
+				GG000014 /* Extensions */,
+				GG000015 /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		GG000005 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				GG000016 /* ValidationTests */,
+				GG000017 /* ParserTests */,
+				GG000018 /* HostsManagerTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		GG000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB000001 /* HostsManager.app */,
+				BB000002 /* HostsManagerExtension.appex */,
+				BB000003 /* HostsManagerHelper */,
+				BB000004 /* HostsManagerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		GG000010 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA000003 /* HostEntry.swift */,
+				FA000004 /* HostsFile.swift */,
+				FA000005 /* ValidationError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		GG000011 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FA000006 /* HostsFileService.swift */,
+				FA000007 /* ValidationService.swift */,
+				FA000008 /* XPCService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		GG000012 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FA000009 /* EditorViewModel.swift */,
+				FA000010 /* HostsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		GG000013 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA000011 /* HostEntryDetailView.swift */,
+				FA000012 /* HostEntryEditorView.swift */,
+				FA000013 /* HostEntryRow.swift */,
+				FA000014 /* HostsListView.swift */,
+				FA000056 /* HostsFileDocument.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		GG000014 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FA000019 /* String+Validation.swift */,
+				FA000020 /* View+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		GG000015 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FA000021 /* ErrorHandling.swift */,
+				FA000022 /* Logger.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		GG000016 /* ValidationTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA000023 /* ValidationTests.swift */,
+			);
+			path = ValidationTests;
+			sourceTree = "<group>";
+		};
+		GG000017 /* ParserTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA000024 /* ParserTests.swift */,
+			);
+			path = ParserTests;
+			sourceTree = "<group>";
+		};
+		GG000018 /* HostsManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA000051 /* EditorViewModelTests.swift */,
+				FA000052 /* HostEntryTests.swift */,
+				FA000053 /* HostsFileServiceTests.swift */,
+				FA000054 /* MockXPCService.swift */,
+			);
+			path = HostsManagerTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB000001T /* HostsManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = XC000001 /* Build configuration list for PBXNativeTarget "HostsManager" */;
+			buildPhases = (
+				EE000001 /* Frameworks */,
+				SS000001 /* Sources */,
+				RR000001 /* Resources */,
+				DD000001 /* Embed App Extensions */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = HostsManager;
+			productName = HostsManager;
+			productReference = BB000001 /* HostsManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BB000002T /* HostsManagerExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = XC000002 /* Build configuration list for PBXNativeTarget "HostsManagerExtension" */;
+			buildPhases = (
+				EE000002 /* Frameworks */,
+				SS000002 /* Sources */,
+				RR000002 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = HostsManagerExtension;
+			productName = HostsManagerExtension;
+			productReference = BB000002 /* HostsManagerExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		BB000003T /* HostsManagerHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = XC000003 /* Build configuration list for PBXNativeTarget "HostsManagerHelper" */;
+			buildPhases = (
+				EE000003 /* Frameworks */,
+				SS000003 /* Sources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = HostsManagerHelper;
+			productName = HostsManagerHelper;
+			productReference = BB000003 /* HostsManagerHelper */;
+			productType = "com.apple.product-type.tool";
+		};
+		BB000004T /* HostsManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = XC000004 /* Build configuration list for PBXNativeTarget "HostsManagerTests" */;
+			buildPhases = (
+				EE000004 /* Frameworks */,
+				SS000004 /* Sources */,
+			);
+			buildRules = ();
+			dependencies = (
+				DP000002 /* HostsManagerExtension */,
+			);
+			name = HostsManagerTests;
+			productName = HostsManagerTests;
+			productReference = BB000004 /* HostsManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BB000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					BB000001T = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					BB000002T = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					BB000003T = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					BB000004T = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = BB000001T;
+					};
+				};
+			};
+			buildConfigurationList = XC000000 /* Build configuration list for PBXProject "HostsManager" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = GG000000;
+			productRefGroup = GG000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB000001T /* HostsManager */,
+				BB000002T /* HostsManagerExtension */,
+				BB000003T /* HostsManagerHelper */,
+				BB000004T /* HostsManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		RR000001 /* Resources (App) */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		RR000002 /* Resources (Ext) */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000050 /* Assets.xcassets in Resources (Ext) */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		SS000001 /* Sources (App) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000001 /* HostsManagerApp.swift in Sources */,
+				AA000017 /* Constants.swift in Sources (App) */,
+				AA000018 /* HelperProtocol.swift in Sources (App) */,
+				AA000019 /* String+Validation.swift in Sources (App) */,
+				AA000020 /* View+Extensions.swift in Sources (App) */,
+				AA000021 /* ErrorHandling.swift in Sources (App) */,
+				AA000022 /* Logger.swift in Sources (App) */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		SS000002 /* Sources (Ext) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000002 /* HostsManagerExtension.swift in Sources */,
+				AA000003 /* HostEntry.swift in Sources (Ext) */,
+				AA000004 /* HostsFile.swift in Sources (Ext) */,
+				AA000005 /* ValidationError.swift in Sources (Ext) */,
+				AA000006 /* HostsFileService.swift in Sources */,
+				AA000007 /* ValidationService.swift in Sources */,
+				AA000008 /* XPCService.swift in Sources */,
+				AA000009 /* EditorViewModel.swift in Sources */,
+				AA000010 /* HostsViewModel.swift in Sources */,
+				AA000011 /* HostEntryDetailView.swift in Sources */,
+				AA000012 /* HostEntryEditorView.swift in Sources */,
+				AA000013 /* HostEntryRow.swift in Sources */,
+				AA000014 /* HostsListView.swift in Sources */,
+				AA000056 /* HostsFileDocument.swift in Sources (Ext) */,
+				AA000023 /* Constants.swift in Sources (Ext) */,
+				AA000024 /* HelperProtocol.swift in Sources (Ext) */,
+				AA000025 /* String+Validation.swift in Sources (Ext) */,
+				AA000026 /* View+Extensions.swift in Sources (Ext) */,
+				AA000027 /* ErrorHandling.swift in Sources (Ext) */,
+				AA000028 /* Logger.swift in Sources (Ext) */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		SS000003 /* Sources (Helper) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000015 /* HelperService.swift in Sources */,
+				AA000016 /* main.swift in Sources */,
+				AA000029 /* Constants.swift in Sources (Helper) */,
+				AA000030 /* HelperProtocol.swift in Sources (Helper) */,
+				AA000031 /* ErrorHandling.swift in Sources (Helper) */,
+				AA000032 /* Logger.swift in Sources (Helper) */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		SS000004 /* Sources (Tests) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000033 /* ValidationTests.swift in Sources */,
+				AA000034 /* ParserTests.swift in Sources */,
+				AA000035 /* Constants.swift in Sources (Tests) */,
+				AA000036 /* HelperProtocol.swift in Sources (Tests) */,
+				AA000037 /* String+Validation.swift in Sources (Tests) */,
+				AA000038 /* View+Extensions.swift in Sources (Tests) */,
+				AA000039 /* ErrorHandling.swift in Sources (Tests) */,
+				AA000040 /* Logger.swift in Sources (Tests) */,
+				AA000041 /* HostEntry.swift in Sources (Tests) */,
+				AA000042 /* HostsFile.swift in Sources (Tests) */,
+				AA000043 /* ValidationError.swift in Sources (Tests) */,
+				AA000044 /* HostsFileService.swift in Sources (Tests) */,
+				AA000045 /* ValidationService.swift in Sources (Tests) */,
+				AA000046 /* XPCService.swift in Sources (Tests) */,
+				AA000047 /* EditorViewModel.swift in Sources (Tests) */,
+				AA000048 /* HostsViewModel.swift in Sources (Tests) */,
+				AA000057 /* HostsFileDocument.swift in Sources (Tests) */,
+				AA000051 /* EditorViewModelTests.swift in Sources */,
+				AA000052 /* HostEntryTests.swift in Sources */,
+				AA000053 /* HostsFileServiceTests.swift in Sources */,
+				AA000054 /* MockXPCService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DP000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000002T /* HostsManagerExtension */;
+			targetProxy = CC000001 /* PBXContainerItemProxy */;
+		};
+		DP000002 /* PBXTargetDependency (Tests→Ext) */ = {
+			isa = PBXTargetDependency;
+			target = BB000002T /* HostsManagerExtension */;
+			targetProxy = CC000003 /* PBXContainerItemProxy (Tests→Ext) */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		/* Project-level Debug */
+		BC000001 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		/* Project-level Release */
+		BC000002 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		/* HostsManager App Debug */
+		BC000003 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HostsManagerApp/HostsManagerApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HostsManagerApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		/* HostsManager App Release */
+		BC000004 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HostsManagerApp/HostsManagerApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HostsManagerApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		/* Extension Debug */
+		BC000005 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HostsManagerExtension/HostsManagerExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HostsManagerExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.app.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		/* Extension Release */
+		BC000006 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HostsManagerExtension/HostsManagerExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HostsManagerExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.app.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		/* Helper Debug */
+		BC000007 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = HostsManagerHelper/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		/* Helper Release */
+		BC000008 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = HostsManagerHelper/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		/* Tests Debug */
+		BC000009 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		/* Tests Release */
+		BC000010 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		XC000000 /* Build configuration list for PBXProject "HostsManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC000001 /* Debug */,
+				BC000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		XC000001 /* Build configuration list for PBXNativeTarget "HostsManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC000003 /* Debug */,
+				BC000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		XC000002 /* Build configuration list for PBXNativeTarget "HostsManagerExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC000005 /* Debug */,
+				BC000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		XC000003 /* Build configuration list for PBXNativeTarget "HostsManagerHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC000007 /* Debug */,
+				BC000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		XC000004 /* Build configuration list for PBXNativeTarget "HostsManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC000009 /* Debug */,
+				BC000010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = BB000000 /* Project object */;
+}
+

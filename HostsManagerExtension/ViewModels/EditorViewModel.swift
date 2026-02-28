@@ -120,4 +120,3 @@ class EditorViewModel: ObservableObject {
         validationErrors.map { $0.localizedDescription }.joined(separator: "\n")
     }
 }
-

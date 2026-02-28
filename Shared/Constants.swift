@@ -50,4 +50,3 @@ enum HostsFileConstants {
         "broadcasthost"
     ]
 }
-
