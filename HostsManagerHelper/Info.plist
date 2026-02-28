@@ -13,13 +13,12 @@
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>SMAuthorizedClients</key>
 	<array>
-		<string>identifier "com.hostsmanager.app" and anchor apple generic and certificate leaf[subject.CN] = "YOUR_CERT_CN"</string>
+		<string>identifier "com.hostsmanager.app" and anchor apple generic and certificate leaf[subject.OU] = "36UXT4B9Q8"</string>
 	</array>
 </dict>
 </plist>
-

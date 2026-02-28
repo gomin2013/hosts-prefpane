@@ -1,42 +1,11 @@
 //
 //  HostsManagerExtension.swift
-//  Hosts Manager Extension
+//  Hosts Manager
 //
 //  Created on February 9, 2026.
 //
-
-import SwiftUI
-
-/// Settings extension entry point
-/// Note: For macOS Sequoia, this will use the Settings Extension framework
-/// For now, this serves as the main interface when run standalone
-@main
-struct HostsManagerExtension: App {
-    var body: some Scene {
-        WindowGroup {
-            HostsListView()
-                .frame(
-                    minWidth: AppConstants.minimumWindowWidth,
-                    minHeight: AppConstants.minimumWindowHeight
-                )
-        }
-        .defaultSize(
-            width: AppConstants.defaultWindowWidth,
-            height: AppConstants.defaultWindowHeight
-        )
-    }
-}
-
-// Note: When building as a proper Settings Extension for macOS Sequoia,
-// replace the above with:
+// NOTE: @main has been removed. The application entry point is now
+// HostsManagerApp/HostsManagerApp.swift (MenuBarExtra).
+// This file is retained only for Xcode target membership reference
+// and can be deleted once the Extension target is removed from the project.
 //
-// import SettingsKit
-//
-// @main
-// struct HostsManagerExtension: SettingsExtension {
-//     var body: some SettingsExtensionScene {
-//         SettingsScene {
-//             HostsListView()
-//         }
-//     }
-// }

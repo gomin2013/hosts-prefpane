@@ -55,7 +55,6 @@
 		AA000046 /* XPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000008 /* XPCService.swift */; };
 		AA000047 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000009 /* EditorViewModel.swift */; };
 		AA000048 /* HostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000010 /* HostsViewModel.swift */; };
-		AA000049 /* HostsManagerExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB000002 /* HostsManagerExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA000050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA000025 /* Assets.xcassets */; };
 		AA000051 /* EditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000051 /* EditorViewModelTests.swift */; };
 		AA000052 /* HostEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000052 /* HostEntryTests.swift */; };
@@ -63,9 +62,47 @@
 		AA000054 /* MockXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000054 /* MockXPCService.swift */; };
 		AA000056 /* HostsFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000056 /* HostsFileDocument.swift */; };
 		AA000057 /* HostsFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000056 /* HostsFileDocument.swift */; };
+		AA000060 /* HostEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000003 /* HostEntry.swift */; };
+		AA000061 /* HostsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000004 /* HostsFile.swift */; };
+		AA000062 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000005 /* ValidationError.swift */; };
+		AA000063 /* HostsFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000006 /* HostsFileService.swift */; };
+		AA000064 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000007 /* ValidationService.swift */; };
+		AA000065 /* XPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000008 /* XPCService.swift */; };
+		AA000066 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000009 /* EditorViewModel.swift */; };
+		AA000067 /* HostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000010 /* HostsViewModel.swift */; };
+		AA000068 /* HostEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000011 /* HostEntryDetailView.swift */; };
+		AA000069 /* HostEntryEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000012 /* HostEntryEditorView.swift */; };
+		AA000070 /* HostEntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000013 /* HostEntryRow.swift */; };
+		AA000071 /* HostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000014 /* HostsListView.swift */; };
+		AA000072 /* HostsFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000056 /* HostsFileDocument.swift */; };
+		AA000073 /* HostsSupportingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000057 /* HostsSupportingViews.swift */; };
+		AA000074 /* HostsSupportingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000057 /* HostsSupportingViews.swift */; };
+		AA000075 /* HostsSupportingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA000057 /* HostsSupportingViews.swift */; };
+		AA000080 /* Launchd.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA000031 /* Launchd.plist */; };
+		AA000081 /* HostsManagerHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB000003 /* HostsManagerHelper */; };
+		/* Shared/XPC — App target */
+		AA000090 /* XPCBridge.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000090 /* XPCBridge.swift */; };
+		AA000091 /* XPCService(Shared).swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000091 /* XPCService(Shared).swift */; };
+		AA000092 /* HelperManager.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000092 /* HelperManager.swift */; };
+		AA000093 /* HelperStatusMonitor.swift in Sources (App) */ = {isa = PBXBuildFile; fileRef = FA000093 /* HelperStatusMonitor.swift */; };
+		/* Shared/XPC — Extension target */
+		AA000094 /* XPCBridge.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000090 /* XPCBridge.swift */; };
+		AA000095 /* XPCService(Shared).swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000091 /* XPCService(Shared).swift */; };
+		AA000096 /* HelperStatusMonitor.swift in Sources (Ext) */ = {isa = PBXBuildFile; fileRef = FA000093 /* HelperStatusMonitor.swift */; };
+		/* Shared/XPC — Tests target */
+		AA000097 /* XPCBridge.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000090 /* XPCBridge.swift */; };
+		AA000098 /* XPCService(Shared).swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000091 /* XPCService(Shared).swift */; };
+		AA000099 /* HelperStatusMonitor.swift in Sources (Tests) */ = {isa = PBXBuildFile; fileRef = FA000093 /* HelperStatusMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1301B5022F53A9F8007E3401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000001T;
+			remoteInfo = HostsManager;
+		};
 		CC000003 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BB000000 /* Project object */;
@@ -73,21 +110,14 @@
 			remoteGlobalIDString = BB000002T;
 			remoteInfo = HostsManagerExtension;
 		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		DD000001 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				AA000049 /* HostsManagerExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+		CC000004 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000003T;
+			remoteInfo = HostsManagerHelper;
 		};
-/* End PBXCopyFilesBuildPhase section */
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		BB000001 /* HostsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HostsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +160,11 @@
 		FA000053 /* HostsFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFileServiceTests.swift; sourceTree = "<group>"; };
 		FA000054 /* MockXPCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockXPCService.swift; sourceTree = "<group>"; };
 		FA000056 /* HostsFileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsFileDocument.swift; sourceTree = "<group>"; };
+		FA000057 /* HostsSupportingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostsSupportingViews.swift; sourceTree = "<group>"; };
+		FA000090 /* XPCBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCBridge.swift; sourceTree = "<group>"; };
+		FA000091 /* XPCService(Shared).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XPCService.swift"; path = "XPCService.swift"; sourceTree = "<group>"; };
+		FA000092 /* HelperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperManager.swift; sourceTree = "<group>"; };
+		FA000093 /* HelperStatusMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperStatusMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +254,7 @@
 				FA000018 /* HelperProtocol.swift */,
 				GG000014 /* Extensions */,
 				GG000015 /* Utilities */,
+				GG000019 /* XPC */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -281,6 +317,7 @@
 				FA000013 /* HostEntryRow.swift */,
 				FA000014 /* HostsListView.swift */,
 				FA000056 /* HostsFileDocument.swift */,
+				FA000057 /* HostsSupportingViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +338,17 @@
 				FA000022 /* Logger.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		GG000019 /* XPC */ = {
+			isa = PBXGroup;
+			children = (
+				FA000090 /* XPCBridge.swift */,
+				FA000091 /* XPCService(Shared).swift */,
+				FA000092 /* HelperManager.swift */,
+				FA000093 /* HelperStatusMonitor.swift */,
+			);
+			path = XPC;
 			sourceTree = "<group>";
 		};
 		GG000016 /* ValidationTests */ = {
@@ -339,12 +387,14 @@
 			buildPhases = (
 				EE000001 /* Frameworks */,
 				SS000001 /* Sources */,
+				FF000001 /* Copy Privileged Helper Tools */,
+				FF000002 /* Copy LaunchDaemons */,
 				RR000001 /* Resources */,
-				DD000001 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DP000003 /* PBXTargetDependency */,
 			);
 			name = HostsManager;
 			productName = HostsManager;
@@ -395,6 +445,7 @@
 			);
 			dependencies = (
 				DP000002 /* PBXTargetDependency */,
+				1301B5032F53A9F8007E3401 /* PBXTargetDependency */,
 			);
 			name = HostsManagerTests;
 			productName = HostsManagerTests;
@@ -465,6 +516,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FF000001 /* Copy Privileged Helper Tools */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Contents/Library/PrivilegedHelperTools";
+			dstSubfolderSpec = 16;
+			files = (
+				AA000081 /* HostsManagerHelper in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF000002 /* Copy LaunchDaemons */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Contents/Library/LaunchDaemons";
+			dstSubfolderSpec = 16;
+			files = (
+				AA000080 /* Launchd.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		SS000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -477,6 +551,23 @@
 				AA000020 /* View+Extensions.swift in Sources */,
 				AA000021 /* ErrorHandling.swift in Sources */,
 				AA000022 /* Logger.swift in Sources */,
+				AA000060 /* HostEntry.swift in Sources */,
+				AA000061 /* HostsFile.swift in Sources */,
+				AA000062 /* ValidationError.swift in Sources */,
+				AA000063 /* HostsFileService.swift in Sources */,
+				AA000064 /* ValidationService.swift in Sources */,
+				AA000066 /* EditorViewModel.swift in Sources */,
+				AA000067 /* HostsViewModel.swift in Sources */,
+				AA000068 /* HostEntryDetailView.swift in Sources */,
+				AA000069 /* HostEntryEditorView.swift in Sources */,
+				AA000070 /* HostEntryRow.swift in Sources */,
+				AA000071 /* HostsListView.swift in Sources */,
+				AA000072 /* HostsFileDocument.swift in Sources */,
+				AA000074 /* HostsSupportingViews.swift in Sources */,
+				AA000090 /* XPCBridge.swift in Sources (App) */,
+				AA000091 /* XPCService(Shared).swift in Sources (App) */,
+				AA000092 /* HelperManager.swift in Sources (App) */,
+				AA000093 /* HelperStatusMonitor.swift in Sources (App) */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +581,6 @@
 				AA000005 /* ValidationError.swift in Sources */,
 				AA000006 /* HostsFileService.swift in Sources */,
 				AA000007 /* ValidationService.swift in Sources */,
-				AA000008 /* XPCService.swift in Sources */,
 				AA000009 /* EditorViewModel.swift in Sources */,
 				AA000010 /* HostsViewModel.swift in Sources */,
 				AA000011 /* HostEntryDetailView.swift in Sources */,
@@ -498,12 +588,16 @@
 				AA000013 /* HostEntryRow.swift in Sources */,
 				AA000014 /* HostsListView.swift in Sources */,
 				AA000056 /* HostsFileDocument.swift in Sources */,
+				AA000073 /* HostsSupportingViews.swift in Sources */,
 				AA000023 /* Constants.swift in Sources */,
 				AA000024 /* HelperProtocol.swift in Sources */,
 				AA000025 /* String+Validation.swift in Sources */,
 				AA000026 /* View+Extensions.swift in Sources */,
 				AA000027 /* ErrorHandling.swift in Sources */,
 				AA000028 /* Logger.swift in Sources */,
+				AA000094 /* XPCBridge.swift in Sources (Ext) */,
+				AA000095 /* XPCService(Shared).swift in Sources (Ext) */,
+				AA000096 /* HelperStatusMonitor.swift in Sources (Ext) */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +618,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA000051 /* EditorViewModelTests.swift in Sources */,
+				AA000052 /* HostEntryTests.swift in Sources */,
+				AA000053 /* HostsFileServiceTests.swift in Sources */,
+				AA000054 /* MockXPCService.swift in Sources */,
 				AA000033 /* ValidationTests.swift in Sources */,
 				AA000034 /* ParserTests.swift in Sources */,
 				AA000035 /* Constants.swift in Sources */,
@@ -537,24 +635,33 @@
 				AA000043 /* ValidationError.swift in Sources */,
 				AA000044 /* HostsFileService.swift in Sources */,
 				AA000045 /* ValidationService.swift in Sources */,
-				AA000046 /* XPCService.swift in Sources */,
 				AA000047 /* EditorViewModel.swift in Sources */,
 				AA000048 /* HostsViewModel.swift in Sources */,
 				AA000057 /* HostsFileDocument.swift in Sources */,
-				AA000051 /* EditorViewModelTests.swift in Sources */,
-				AA000052 /* HostEntryTests.swift in Sources */,
-				AA000053 /* HostsFileServiceTests.swift in Sources */,
-				AA000054 /* MockXPCService.swift in Sources */,
+				AA000075 /* HostsSupportingViews.swift in Sources */,
+				AA000097 /* XPCBridge.swift in Sources (Tests) */,
+				AA000098 /* XPCService(Shared).swift in Sources (Tests) */,
+				AA000099 /* HelperStatusMonitor.swift in Sources (Tests) */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1301B5032F53A9F8007E3401 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000001T /* HostsManager */;
+			targetProxy = 1301B5022F53A9F8007E3401 /* PBXContainerItemProxy */;
+		};
 		DP000002 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BB000002T /* HostsManagerExtension */;
 			targetProxy = CC000003 /* PBXContainerItemProxy */;
+		};
+		DP000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000003T /* HostsManagerHelper */;
+			targetProxy = CC000004 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -563,7 +670,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -612,13 +718,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -628,7 +732,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -671,11 +774,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -686,17 +787,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = HostsManagerApp/HostsManagerApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = HostsManagerApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -716,17 +819,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = HostsManagerApp/HostsManagerApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = HostsManagerApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -748,10 +853,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = HostsManagerExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -777,10 +882,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = HostsManagerExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -805,13 +910,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = HostsManagerHelper/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.helper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "com.hostsmanager.helper";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5;
 			};
@@ -823,13 +928,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = HostsManagerHelper/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hostsmanager.helper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "com.hostsmanager.helper";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5;
 			};
@@ -838,10 +943,11 @@
 		BC000009 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 2.0.0;
@@ -849,16 +955,18 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostsManager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HostsManager";
 			};
 			name = Debug;
 		};
 		BC000010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 36UXT4B9Q8;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 2.0.0;
@@ -866,6 +974,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostsManager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HostsManager";
 			};
 			name = Release;
 		};

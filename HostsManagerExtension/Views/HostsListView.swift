@@ -17,56 +17,62 @@ struct HostsListView: View {
     @State private var showingRestoreConfirmation = false
 
     var body: some View {
-        NavigationSplitView {
-            sidebarContent
-        } detail: {
-            detailContent
-        }
-        .alert(item: $viewModel.error) { alertError in
-            Alert(
-                title: Text(alertError.title),
-                message: Text(alertError.message),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-        .sheet(isPresented: $showingAddEntry) {
-            NavigationStack {
-                HostEntryEditorView(
-                    entry: nil,
-                    hostsFile: viewModel.fileService.hostsFile,
-                    onSave: { viewModel.add($0) }
+        VStack(spacing: 0) {
+            NavigationSplitView {
+                sidebarContent
+            } detail: {
+                detailContent
+            }
+            .alert(item: $viewModel.error) { alertError in
+                Alert(
+                    title: Text(alertError.title),
+                    message: Text(alertError.message),
+                    dismissButton: .default(Text("OK"))
                 )
             }
-        }
-        .fileImporter(
-            isPresented: $showingImportPicker,
-            allowedContentTypes: [.text, .plainText],
-            allowsMultipleSelection: false
-        ) { result in
-            handleImport(result: result)
-        }
-        .fileExporter(
-            isPresented: $showingExportPicker,
-            document: HostsFileDocument(content: viewModel.fileService.hostsFile.serialize()),
-            contentType: .plainText,
-            defaultFilename: "hosts"
-        ) { result in
-            handleExport(result: result)
-        }
-        .confirmationDialog(
-            "Restore from Backup",
-            isPresented: $showingRestoreConfirmation,
-            titleVisibility: .visible
-        ) {
-            Button("Restore", role: .destructive) {
-                viewModel.restoreFromBackup()
+            .sheet(isPresented: $showingAddEntry) {
+                NavigationStack {
+                    HostEntryEditorView(
+                        entry: nil,
+                        hostsFile: viewModel.fileService.hostsFile,
+                        onSave: { viewModel.add($0) }
+                    )
+                }
             }
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("This will replace your current hosts file with the backup. This action cannot be undone.")
-        }
-        .task {
-            await viewModel.loadInitial()
+            .fileImporter(
+                isPresented: $showingImportPicker,
+                allowedContentTypes: [.text, .plainText],
+                allowsMultipleSelection: false
+            ) { result in
+                handleImport(result: result)
+            }
+            .fileExporter(
+                isPresented: $showingExportPicker,
+                document: HostsFileDocument(content: viewModel.fileService.hostsFile.serialize()),
+                contentType: .plainText,
+                defaultFilename: "hosts"
+            ) { result in
+                handleExport(result: result)
+            }
+            .confirmationDialog(
+                "Restore from Backup",
+                isPresented: $showingRestoreConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Restore", role: .destructive) {
+                    viewModel.restoreFromBackup()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will replace your current hosts file with the backup. This action cannot be undone.")
+            }
+            .task {
+                await viewModel.loadInitial()
+            }
+
+            Divider()
+
+            MenuBarFooter()
         }
     }
 
@@ -335,45 +341,27 @@ private struct HostsEmptyStateView: View {
     }
 }
 
-// MARK: - Supporting Views
+// MARK: - Menu Bar Footer
 
-struct StatItem: View {
-    let label: String
-    let value: String
-    let color: Color
-
+private struct MenuBarFooter: View {
     var body: some View {
-        VStack(spacing: 4) {
-            Text(value)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(color)
-            Text(label)
-                .foregroundColor(.secondary)
+        HStack {
+            Text("Hosts Manager \(AppConstants.appVersion)")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+            .buttonStyle(.plain)
+            .font(.caption2)
+            .foregroundStyle(.secondary)
+            .keyboardShortcut("q", modifiers: .command)
+            .accessibilityLabel("Quit Hosts Manager")
         }
-    }
-}
-
-struct EmptyDetailView: View {
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "network")
-                .font(.system(size: 64))
-                .foregroundColor(.secondary)
-                .accessibilityHidden(true)
-
-            Text("Select an Entry")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text("Choose a host entry from the list to view details")
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(nsColor: .textBackgroundColor))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("No entry selected. Choose a host entry from the list to view details.")
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color(nsColor: .windowBackgroundColor))
     }
 }
 

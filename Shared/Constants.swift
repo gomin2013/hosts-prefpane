@@ -24,7 +24,11 @@ enum AppConstants {
     static let appVersion = "2.0.0"
     static let targetOS = "macOS Sequoia 15.0+"
 
-    // UI Constants
+    // UI Constants — Menu Bar Popover
+    static let menuBarPopoverWidth: CGFloat = 800
+    static let menuBarPopoverHeight: CGFloat = 580
+
+    // Legacy window size (kept for SPM/test builds)
     static let defaultWindowWidth: CGFloat = 800
     static let defaultWindowHeight: CGFloat = 600
     static let minimumWindowWidth: CGFloat = 600

@@ -155,9 +155,10 @@ class HostsFileService: ObservableObject {
 
     // MARK: - Connection Status
 
-    /// Whether the XPC helper is currently connected
+    /// Whether the XPC helper is currently connected.
+    /// Reads from HelperStatusMonitor which bridges the actor stream to @MainActor.
     var isXPCConnected: Bool {
-        (xpcService as? XPCService)?.isConnected ?? true
+        HelperStatusMonitor.shared.isConnected
     }
 
     /// Re-check helper connection and reload if successful

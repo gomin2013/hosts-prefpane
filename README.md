@@ -1,11 +1,11 @@
-# Hosts Manager for macOS Sequoia
+# Hosts Manager for macOS
 
-A modern macOS Settings extension for managing the `/etc/hosts` file, built entirely with SwiftUI for macOS Sequoia (15.0+).
+A native macOS **menu bar app** for managing the `/etc/hosts` file, built entirely with SwiftUI for macOS Sequoia (15.0+). Lives in the menu bar — click the icon, manage your hosts, done.
 
 ## Features
 
-- 🎨 **Native SwiftUI Interface** — Integrates seamlessly with System Settings
-- 🔒 **Secure Privilege Escalation** — Uses `SMAppService` for safe root access
+- 🖥️ **Menu Bar First** — Always one click away; no Dock clutter (`LSUIElement`)
+- 🔒 **Secure Privilege Escalation** — Uses `SMAppService` for safe root access via XPC
 - ✏️ **Full CRUD Operations** — Add, edit, delete, and toggle host entries
 - ✅ **Smart Validation** — Validates IPv4/IPv6 addresses and hostnames (RFC 1123)
 - 📤 **Import/Export** — Backup and restore your hosts configuration
@@ -22,23 +22,22 @@ A modern macOS Settings extension for managing the `/etc/hosts` file, built enti
 
 ## Architecture
 
-Three-tier architecture with strict privilege separation:
+Two-tier architecture with strict privilege separation:
 
-1. **Settings Extension** (`HostsManagerExtension`) — SwiftUI interface inside System Settings
-2. **Privileged Helper Tool** (`HostsManagerHelper`) — XPC service that performs root file operations
-3. **Host App** (`HostsManagerApp`) — Container app that registers the helper via `SMAppService`
-4. **Shared** — Models, protocols, and utilities shared across all targets
+1. **Menu Bar App** (`HostsManagerApp`) — SwiftUI interface hosted in `MenuBarExtra(.window)`; registers the helper via `SMAppService` on launch
+2. **Privileged Helper Tool** (`HostsManagerHelper`) — XPC daemon that performs root file operations
+3. **Shared** — Models, protocols, and utilities shared across all targets
 
 ```
 ┌──────────────────────────────────────────┐
-│  System Settings.app                     │
+│  macOS Menu Bar                          │
 │  ┌────────────────────────────────────┐  │
-│  │  HostsManagerExtension             │  │
-│  │  (SwiftUI Views + ViewModels)      │  │
+│  │  HostsManagerApp (MenuBarExtra)    │  │
+│  │  HostsListView (NavigationSplit)   │  │
 │  └────────────────────────────────────┘  │
-└──────────────────────────────────────────┘
+└──────────────────────┬───────────────────┘
            ↕ XPC (NSXPCConnection)
-┌──────────────────────────────────────────┐
+┌──────────────────────┴───────────────────┐
 │  HostsManagerHelper (launchd daemon)     │
 │  Root access → reads/writes /etc/hosts   │
 └──────────────────────────────────────────┘
@@ -47,11 +46,14 @@ Three-tier architecture with strict privilege separation:
 ## Project Structure
 
 ```
-hosts-prefpane/
+hosts-manager/
 ├── .swiftlint.yml                # SwiftLint configuration
-├── HostsManager.xcodeproj/       # Xcode project (3 targets + tests)
-├── HostsManagerApp/              # Container app + SMAppService registration
-├── HostsManagerExtension/        # Settings extension (UI + logic)
+├── HostsManager.xcodeproj/       # Xcode project (2 active targets + tests)
+├── HostsManagerApp/              # Menu bar app entry point + Info.plist
+│   ├── HostsManagerApp.swift     # @main, MenuBarExtra, SMAppService registration
+│   ├── HostsManagerApp.entitlements
+│   └── Info.plist                # LSUIElement=YES
+├── HostsManagerExtension/        # UI + logic (compiled into HostsManagerApp)
 │   ├── Models/                   # HostEntry, HostsFile, ValidationError
 │   ├── Services/                 # HostsFileService, ValidationService, XPCService
 │   ├── ViewModels/               # HostsViewModel, EditorViewModel
@@ -84,6 +86,10 @@ xcodebuild -project HostsManager.xcodeproj \
            -configuration Debug \
            build
 ```
+
+### Run
+
+After building, the app appears in the **macOS menu bar** (network icon). Click it to open the hosts manager popover. Use **Quit** (⌘Q) in the popover footer to exit.
 
 ### Test
 
@@ -134,7 +140,8 @@ _Last updated: March 1, 2026_
 | 6 | Xcode project setup & target configuration | ✅ Complete |
 | 7 | Testing — 69 unit tests, CI green (`xcodebuild test`) | ✅ Complete |
 | 8 | Polish — SwiftLint 0 violations, accessibility, refactor | ✅ Complete |
-| 9 | Distribution (signing, notarization, installer) | 🔲 Pending |
+| 9 | Architecture pivot — Menu Bar App (retired Settings Extension) | ✅ Complete |
+| 10 | Distribution (signing, notarization, installer) | 🔲 Pending |
 
 ## Roadmap
 
@@ -146,7 +153,8 @@ _Last updated: March 1, 2026_
 - [x] Phase 6: Xcode project setup
 - [x] Phase 7: Testing and compilation verification
 - [x] Phase 8: Polish, accessibility, SwiftLint, and code quality
-- [ ] Phase 9: Code signing, notarization, and distribution
+- [x] Phase 9: Architecture pivot — Menu Bar App
+- [ ] Phase 10: Code signing, notarization, and distribution
 
 ## License
 
@@ -162,4 +170,4 @@ For issues or questions, please open an issue on GitHub.
 
 ---
 
-> This project targets macOS Sequoia (15.0+) and uses the modern Settings Extension API, replacing the legacy `.prefPane` bundle format.
+> This project targets macOS Sequoia (15.0+) and uses a native `MenuBarExtra` menu bar app, replacing both the legacy `.prefPane` bundle format and the previous Settings Extension approach.
