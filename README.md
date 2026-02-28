@@ -4,41 +4,42 @@ A modern macOS Settings extension for managing the `/etc/hosts` file, built enti
 
 ## Features
 
-- 🎨 **Native SwiftUI Interface** - Modern, clean UI that integrates seamlessly with macOS Settings
-- 🔒 **Secure Privilege Escalation** - Uses `SMAppService` for secure root access
-- ✏️ **Full CRUD Operations** - Add, edit, delete, and toggle host entries
-- ✅ **Smart Validation** - Validates IP addresses (IPv4/IPv6) and hostnames (RFC 1123)
-- 📤 **Import/Export** - Backup and restore your hosts configuration
-- 🔍 **Search & Filter** - Quickly find entries with built-in search
-- 💬 **Comments Support** - Add notes to your host entries
-- 🔄 **Auto DNS Flush** - Automatically flushes DNS cache after changes
+- 🎨 **Native SwiftUI Interface** — Integrates seamlessly with System Settings
+- 🔒 **Secure Privilege Escalation** — Uses `SMAppService` for safe root access
+- ✏️ **Full CRUD Operations** — Add, edit, delete, and toggle host entries
+- ✅ **Smart Validation** — Validates IPv4/IPv6 addresses and hostnames (RFC 1123)
+- 📤 **Import/Export** — Backup and restore your hosts configuration
+- 🔍 **Search & Filter** — Quickly find entries with built-in search
+- 💬 **Comments Support** — Attach notes to individual host entries
+- 🔄 **Auto DNS Flush** — Flushes DNS cache automatically after changes
 
 ## Requirements
 
 - macOS Sequoia 15.0 or later
-- Xcode 15.0 or later
+- Xcode 16.0 or later
 - Swift 5.9+
 
 ## Architecture
 
-This project uses a three-tier architecture:
+Three-tier architecture with strict privilege separation:
 
-1. **Settings Extension** (`HostsManagerExtension`) - SwiftUI interface that appears in System Settings
-2. **Helper Tool** (`HostsManagerHelper`) - Privileged XPC service that performs root file operations
-3. **Shared Code** - Models, protocols, and utilities shared between components
+1. **Settings Extension** (`HostsManagerExtension`) — SwiftUI interface inside System Settings
+2. **Privileged Helper Tool** (`HostsManagerHelper`) — XPC service that performs root file operations
+3. **Host App** (`HostsManagerApp`) — Container app that registers the helper via `SMAppService`
+4. **Shared** — Models, protocols, and utilities shared across all targets
 
 ```
 ┌──────────────────────────────────────────┐
-│  Settings.app                            │
+│  System Settings.app                     │
 │  ┌────────────────────────────────────┐  │
-│  │  Hosts Manager Extension           │  │
+│  │  HostsManagerExtension             │  │
 │  │  (SwiftUI Views + ViewModels)      │  │
 │  └────────────────────────────────────┘  │
 └──────────────────────────────────────────┘
-           ↕ XPC Communication
+           ↕ XPC (NSXPCConnection)
 ┌──────────────────────────────────────────┐
-│  Privileged Helper Tool                  │
-│  (Root access to /etc/hosts)             │
+│  HostsManagerHelper (launchd daemon)     │
+│  Root access → reads/writes /etc/hosts   │
 └──────────────────────────────────────────┘
 ```
 
@@ -46,42 +47,32 @@ This project uses a three-tier architecture:
 
 ```
 hosts-prefpane/
-├── HostsManagerApp/              # Main app container
-├── HostsManagerExtension/        # Settings extension (UI)
-├── HostsManagerHelper/           # Privileged helper tool
-├── Shared/                       # Shared models & utilities
-└── Tests/                        # Unit tests
+├── HostsManager.xcodeproj/       # Xcode project (3 targets + tests)
+├── HostsManagerApp/              # Container app + SMAppService registration
+├── HostsManagerExtension/        # Settings extension (UI + logic)
+│   ├── Models/                   # HostEntry, HostsFile, ValidationError
+│   ├── Services/                 # HostsFileService, ValidationService, XPCService
+│   ├── ViewModels/               # HostsViewModel, EditorViewModel
+│   └── Views/                    # SwiftUI views
+├── HostsManagerHelper/           # Privileged XPC daemon
+├── Shared/                       # Constants, Logger, protocols, extensions
+│   ├── Extensions/
+│   └── Utilities/
+└── Tests/                        # Unit tests (Validation, Parser)
 ```
 
-## Installation
+## Getting Started
 
-1. Clone the repository
-2. Open `HostsManager.xcodeproj` in Xcode
-3. Build and run the project
-4. The extension will appear in System Settings
+### Build
 
-## Development
+```bash
+open HostsManager.xcodeproj
+```
 
-### Current Status (February 28, 2026)
-
-✅ **All source code complete** (24 Swift files, 3,146 lines)  
-✅ **Phase 5 Configuration complete** (Info.plist, entitlements, Package.swift)  
-✅ **Code fixes applied** (String+Validation, Logger, View+Extensions)  
-✅ **Build scripts ready** (6 automation scripts)  
-✅ **Documentation complete** (10+ comprehensive guides)  
-⚠️ **Xcode project creation needed** (Phase 6, requires full Xcode)
-
-**Project Progress:** 75% complete ✅  
-**Quick Status:** Run `./status-display.sh` for visual dashboard  
-**Next Steps:** Run `./next-steps.sh` for detailed guidance
-
-### Building (after Xcode project is set up)
-
-In Xcode:
-1. Select the `HostsManagerApp` scheme
-2. Product → Build (⌘B)
+Select the `HostsManagerApp` scheme → **Product → Build** (⌘B).
 
 Or via command line:
+
 ```bash
 xcodebuild -project HostsManager.xcodeproj \
            -scheme HostsManagerApp \
@@ -89,56 +80,62 @@ xcodebuild -project HostsManager.xcodeproj \
            build
 ```
 
-### Testing
+### Test
 
-In Xcode:
-1. Select the `HostsManagerTests` scheme
-2. Product → Test (⌘U)
-
-Or via command line:
 ```bash
 xcodebuild test -project HostsManager.xcodeproj \
                 -scheme HostsManagerApp
 ```
 
-### Quick Start for Development
-
-1. **Read QUICKSTART.md** - Understand what's been built
-2. **Follow XCODE_SETUP.md** - Step-by-step Xcode project creation
-3. **Review IMPLEMENTATION.md** - Technical architecture details
+Or in Xcode: **Product → Test** (⌘U).
 
 ## Security
 
-This application requires elevated privileges to modify `/etc/hosts`. Security measures include:
+Elevated privileges are required to modify `/etc/hosts`. Mitigations include:
 
-- ✅ Privileged operations isolated in separate helper tool
-- ✅ XPC communication with strict protocol validation
-- ✅ Helper tool managed by `SMAppService` (no shell scripts)
-- ✅ Automatic backup before any write operation
-- ✅ Input validation for all IP addresses and hostnames
+- ✅ Privileged operations isolated in a separate helper binary
+- ✅ XPC communication with strict protocol validation (`HelperProtocol`)
+- ✅ Helper managed by `SMAppService` — no shell scripts or `AuthorizationExecuteWithPrivileges`
+- ✅ Automatic backup created before every write operation
+- ✅ Full input validation for IP addresses and hostnames
 
-## License
+## Development Status
 
-MIT License - See LICENSE file for details
+_Last updated: March 1, 2026_
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1–4 | Source code (models, services, views, helper) | ✅ Complete |
+| 5 | Configuration (Info.plist, entitlements, Package.swift) | ✅ Complete |
+| 6 | Xcode project setup & target configuration | ✅ Complete |
+| 7 | Testing (unit + integration) | 🔲 Pending |
+| 8 | Polish & UI refinement | 🔲 Pending |
+| 9 | Distribution (signing, notarization, installer) | 🔲 Pending |
 
 ## Roadmap
 
-- [x] Phase 1: Project setup and infrastructure
+- [x] Phase 1: Project structure and infrastructure
 - [x] Phase 2: Data models and business logic
 - [x] Phase 3: Privileged helper tool with XPC
 - [x] Phase 4: SwiftUI interface
-- [ ] Phase 5: Testing and polish
-- [ ] Phase 6: Distribution preparation
+- [x] Phase 5: Configuration files
+- [x] Phase 6: Xcode project setup
+- [ ] Phase 7: Testing and compilation verification
+- [ ] Phase 8: Polish, accessibility, and performance
+- [ ] Phase 9: Code signing, notarization, and distribution
+
+## License
+
+MIT License — see LICENSE file for details.
+
+## Contributing
+
+Contributions are welcome. Please open an issue or submit a pull request.
 
 ## Support
 
-For issues, questions, or contributions, please open an issue on GitHub.
+For issues or questions, please open an issue on GitHub.
 
 ---
 
-**Note:** This project is designed for macOS Sequoia and later. It replaces the legacy `.prefPane` bundle format with modern Settings Extensions.
-
+> This project targets macOS Sequoia (15.0+) and uses the modern Settings Extension API, replacing the legacy `.prefPane` bundle format.
